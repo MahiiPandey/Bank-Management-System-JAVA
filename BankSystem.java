@@ -36,7 +36,6 @@ public class BankSystem {
             else if (n == 3) {
                 break;
             }
-
             else {
                 System.out.println("Enter Valid number");
             }
@@ -47,9 +46,9 @@ public class BankSystem {
 }
 
 class Account {
-    private int id = 0;
-    private double balance = 500D;
-    private double annualInterestRate = 7D;
+    private int id;
+    private double balance;
+    private double annualInterestRate;
     private String dateCreated;
 
     public Account() {
