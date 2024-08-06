@@ -35,8 +35,7 @@ public class BankSystem {
 
             else if (n == 3) {
                 break;
-            }
-            else {
+            } else {
                 System.out.println("Enter Valid number");
             }
 
