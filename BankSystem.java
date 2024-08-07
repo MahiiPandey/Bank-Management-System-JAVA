@@ -1,6 +1,5 @@
-import java.util.Date;
+import Bank.Account;
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
 
 public class BankSystem {
 
@@ -10,7 +9,7 @@ public class BankSystem {
         System.out.println("----------------------------------");
         System.out.println();
 
-        Account ac = new Account(1, 3000);
+        Account ac = new Account();
         ac.setDate();
 
         while (true) {
@@ -41,69 +40,5 @@ public class BankSystem {
 
         }
 
-    }
-}
-
-class Account {
-    private int id;
-    private double balance;
-    private double annualInterestRate;
-    private String dateCreated;
-
-    public Account() {
-    }
-
-    public Account(int id, double balance) {
-        this.id = id;
-        this.balance = balance;
-    }
-
-    public void get() {
-        System.out.println("ID : " + id);
-        System.out.println("Balance : " + balance);
-        System.out.println("Annual Interest Rate : " + annualInterestRate);
-    }
-
-    public double getMonthlyInterestRate() {
-        return (annualInterestRate / 12);
-    }
-
-    public double getMonthlyInterest() {
-        return balance * (getMonthlyInterest() / 100);
-    }
-
-    public void Withdraw() {
-        System.out.println("Available Balance : " + balance);
-        System.out.println("Enter amount that you want to withdraw : ");
-
-        Scanner sc = new Scanner(System.in);
-        Double n = sc.nextDouble();
-
-        if (n > balance) {
-            System.out.println("ERROR not enough balance ");
-        } else {
-            balance -= n;
-        }
-
-        System.out.println("Available Balance : " + balance);
-
-    }
-
-    public void Deposit() {
-
-        System.out.println("Available Balance : " + balance);
-        System.out.println("Enter amount that you want to deposit : ");
-
-        Scanner sc = new Scanner(System.in);
-        Double n = sc.nextDouble();
-
-        balance += n;
-        System.out.println("Available Balance : " + balance);
-
-    }
-
-    public void setDate() {
-        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
-        dateCreated = ft.format(new Date());
     }
 }
