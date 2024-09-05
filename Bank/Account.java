@@ -26,6 +26,12 @@ public class Account {
 
     public void AccountCreate(String Accountname) {
         this.AccountName = Accountname;
+        setAccountNumber();
+        System.out.println("Your Account number is " + AccountNumber);
+    }
+
+    public double getbalance() {
+        return balance;
     }
 
     public void setPin(String pin) {
