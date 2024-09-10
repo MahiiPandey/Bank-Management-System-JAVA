@@ -48,7 +48,7 @@ public class Account {
     }
 
     public double getMonthlyInterest() {
-        return balance * (getMonthlyInterest() / 100.0);
+        return balance * (getMonthlyInterest() / 100);
     }
 
     public void Withdraw() {
