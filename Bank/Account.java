@@ -52,7 +52,7 @@ public class Account {
     }
 
     public void Withdraw() {
-        System.out.println("Available Balance : " + balance);
+        System.out.println("Available Balance :" + balance);
         System.out.println("Enter amount that you want to withdraw : ");
 
         Scanner sc = new Scanner(System.in);
