@@ -1,4 +1,4 @@
-package GUI;
+package Bank.GUI;
 
 import java.awt.GridLayout;
 
@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import Account;
+import Bank.Account;
 
-public class DeleteFrame {
-    public DeleteFrame() {
+public class LoginFrame {
+    public LoginFrame() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -23,8 +23,8 @@ public class DeleteFrame {
         JPasswordField passwordField = new JPasswordField();
         JLabel messageLabel = new JLabel();
 
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.addActionListener(e -> {
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(e -> {
             String name = nameField.getText();
             String password = new String(passwordField.getPassword());
 
@@ -32,10 +32,10 @@ public class DeleteFrame {
 
             if (Account.accountExists(name)) {
                 if (account != null) {
-                    messageLabel.setText("Deletion successful!");
-                    Account.deleteAccount(account.getAccountNumber());
+                    messageLabel.setText("Login successful!");
                     frame.dispose();
-                    new MainFrame();
+                    new AccountFrame(account);
+
                 } else {
                     messageLabel.setText("Invalid password. Try again.");
                 }
@@ -54,7 +54,7 @@ public class DeleteFrame {
         panel.add(nameField);
         panel.add(new JLabel("Enter Password:"));
         panel.add(passwordField);
-        panel.add(deleteButton);
+        panel.add(loginButton);
         panel.add(backButton);
         panel.add(messageLabel);
 
