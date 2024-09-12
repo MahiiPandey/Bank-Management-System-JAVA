@@ -34,13 +34,13 @@ To set up the Bank Management System on your local machine, follow these steps:
 
 3. **Add JDBC Driver**:
 
-Download the JDBC driver for your database (e.g., MySQL Connector/J for MySQL).
+    Download the JDBC driver for your database (e.g., MySQL Connector/J for MySQL).
 
-Place the JDBC driver JAR file in the lib directory of the project or add it to your IDE's build path.
+    Place the JDBC driver JAR file in the lib directory of the project or add it to your IDE's build path.
 
 4. **Configure Database Connection**:
 
-Edit the database.properties file (or equivalent configuration file) to include your database URL, username, and password.
+    Edit the database.properties file (or equivalent configuration file) to include your database URL, username, and password.
 
 ```Example:
 db.url=jdbc:mysql://localhost:3306/your_database
@@ -50,10 +50,10 @@ db.password=your_password
 
 5. **Build and Run the Application**:
 
-Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse, VS Code).
-Build the project using your IDE's build tools.
+    Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse, VS Code).
+    Build the project using your IDE's build tools.
 
-Run the BankManagementSystem class to start the application.
+    Run the BankManagementSystem class to start the application.
 
 ## Usage
 
@@ -67,5 +67,6 @@ Run the BankManagementSystem class to start the application.
 
 ## Troubleshooting
 
-If you encounter any issues connecting to the database, ensure your database.properties file is correctly set up.
-Check if the JDBC driver is included in your classpath.
+    If you encounter any issues connecting to the database, ensure your database.properties file is correctly set up.
+
+    Check if the JDBC driver is included in your classpath.
