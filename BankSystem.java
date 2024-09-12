@@ -1,8 +1,8 @@
 
 // import Bank.Account;
-import Bank.MainFrame;
-import Bank.AccounntFrame;
-import Bank.CreateAccounntFrame;
+import Bank.GUI.AccounntFrame;
+import Bank.GUI.CreateAccounntFrame;
+import Bank.GUI.MainFrame;
 
 // import java.util.Scanner;
 

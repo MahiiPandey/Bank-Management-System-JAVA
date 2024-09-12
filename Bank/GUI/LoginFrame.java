@@ -1,4 +1,4 @@
-package Bank;
+package Bank.GUI;
 
 import java.awt.GridLayout;
 
@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import Bank.Account;
 
 public class LoginFrame {
     public LoginFrame() {
