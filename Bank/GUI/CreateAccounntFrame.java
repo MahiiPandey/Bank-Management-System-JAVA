@@ -40,20 +40,17 @@ public class CreateAccounntFrame {
 
             if (option == JOptionPane.YES_OPTION) {
 
-                // Check if account already exists
-
-                // if (accounts.containsKey(name)) {
-                // JOptionPane.showMessageDialog(panel,"Account with this name already exists.
-                // Please login.");
-                // frame.dispose();
-                // new MainFrame();
-                // } else {
-                account.AccountCreate(name);
-                account.setPassword(password);
-                messageLabel.setText(
-                        "Account created successfully!\n");
-                JOptionPane.showMessageDialog(panel, "Your Account Number is : " + account.getAccountNumber());
-                // }
+                if (Account.accountExists(name)) {
+                    JOptionPane.showMessageDialog(panel, "Account with this name already exists. Please login.");
+                    frame.dispose();
+                    new MainFrame();
+                } else {
+                    account.createAccount(name);
+                    account.setPassword(password);
+                    account.save();
+                    messageLabel.setText("Account created successfully!\n");
+                    JOptionPane.showMessageDialog(panel, "Your Account Number is : " + account.getAccountNumber());
+                }
             } else {
                 messageLabel.setText("Account creation cancelled.");
             }

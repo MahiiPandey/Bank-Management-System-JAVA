@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import Bank.Account;
 
@@ -29,21 +28,20 @@ public class LoginFrame {
             String name = nameField.getText();
             String password = new String(passwordField.getPassword());
 
-            // if (accounts.containsKey(name)) {
-            Account account = accounts.get(name);
-            if (account.checkPassword(password)) {
-                currentAccount = account;
-                messageLabel.setText("Login successful!");
+            Account account = Account.getAccount(name, password);
 
-                frame.dispose();
-                new AccounntFrame(account);
+            if (Account.accountExists(name)) {
+                if (account != null) {
+                    messageLabel.setText("Login successful!");
+                    frame.dispose();
+                    new AccountFrame(account);
 
+                } else {
+                    messageLabel.setText("Invalid password. Try again.");
+                }
             } else {
-                messageLabel.setText("Invalid password. Try again.");
+                messageLabel.setText("No account found with this name.");
             }
-            // } else {
-            // messageLabel.setText("No account found with this name.");
-            // }
         });
 
         JButton backButton = new JButton("Back");

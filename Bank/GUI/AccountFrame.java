@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 
-public class AccounntFrame {
+public class AccountFrame {
 
-    public AccounntFrame(Account ac) {
+    public AccountFrame(Account ac) {
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ public class AccounntFrame {
         withdrawbutton.setFocusable(false);
         withdrawbutton.addActionListener(e -> {
             Double d = Double.parseDouble(JOptionPane.showInputDialog("Amount of withdraw"));
-            int i = ac.Withdraw(d);
+            int i = ac.withdraw(d);
             if (i == 0) {
                 JOptionPane.showMessageDialog(frame, "Insufficient Balance!");
             }
@@ -39,13 +39,13 @@ public class AccounntFrame {
         depositbutton.setFocusable(false);
         depositbutton.addActionListener(e -> {
             Double d = Double.parseDouble(JOptionPane.showInputDialog("Amount of deposit"));
-            ac.Deposit(d);
+            ac.deposit(d);
         });
 
         JButton checkbalance = new JButton("Check Balance");
         checkbalance.setFocusable(false);
         checkbalance.addActionListener(e -> {
-            label.setText("Current Balance : " + String.valueOf(ac.getbalance()));
+            label.setText("Current Balance : " + String.valueOf(ac.getBalance()));
         });
 
         JButton backbutton = new JButton("Back");
