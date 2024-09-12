@@ -2,16 +2,18 @@ package Bank;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+
 import java.awt.GridLayout;
 
 public class MyFrame2 {
     public MyFrame2() {
+
         JButton withdrawbutton = new JButton();
         withdrawbutton.setText("Withdraw Amount");
         withdrawbutton.setFocusable(false);
 
         withdrawbutton.addActionListener(e -> {
-            
+
         });
 
         JButton depositbutton = new JButton();
