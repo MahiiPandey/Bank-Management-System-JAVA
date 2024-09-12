@@ -4,20 +4,32 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 
-public class MyFrame1 {
-    public MyFrame1() {
+public class MainFrame {
+
+    public MainFrame() {
+
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setTitle("Bank Management System");
+
         JButton createAccountbutton = new JButton();
         createAccountbutton.setText("Create Account");
         createAccountbutton.setFocusable(false);
 
         createAccountbutton.addActionListener(e -> {
-            Account ac = new Account();
-            new MyFrame2();
+            new CreateAccounntFrame();
+            frame.dispose();
         });
 
         JButton loginbutton = new JButton();
         loginbutton.setText("Log in");
         loginbutton.setFocusable(false);
+
+        loginbutton.addActionListener(e -> {
+            new LoginFrame();
+            frame.dispose();
+        });
 
         JButton exitbutton = new JButton();
         exitbutton.setText("Exit");
@@ -26,11 +38,6 @@ public class MyFrame1 {
         exitbutton.addActionListener(e -> {
             System.exit(0);
         });
-
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setTitle("Bank Management System");
 
         frame.setLayout(new GridLayout(3, 1));
 

@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class Account {
     private long AccountNumber;
     private String AccountName;
-    private int pin;
+    private String password;
+    private int strength;
     private double balance = 2000d;
     private double annualInterestRate;
     private String dateCreated;
@@ -24,70 +25,67 @@ public class Account {
         AccountNumber = Long.parseLong(sb.toString());
     }
 
+    public long getAccountNumber() {
+        return AccountNumber;
+    }
+
+    public double getbalance() {
+        return balance;
+    }
+
+    public void setPassword(String password) {
+        checkPassword(password);
+        this.password = password;
+    }
+
     public void AccountCreate(String Accountname) {
         this.AccountName = Accountname;
-        setDate();
         setAccountNumber();
         System.out.println("Your Account number is " + AccountNumber);
     }
 
-    public void setPin() {
-        String p;
-        Scanner sc = new Scanner(System.in);
-        p = sc.nextLine();
-        if (p.length() == 4)
-            this.pin = Integer.parseInt(p);
-        else {
-            System.out.println("Set 4 digit pin");
-            setPin();
-        }
-    }
-
-    public double getMonthlyInterestRate() {
-        return (annualInterestRate / 12);
-    }
-
-    public double getMonthlyInterest() {
-        return balance * (getMonthlyInterest() / 100);
-    }
-
-    public void Withdraw() {
-        System.out.println("Available Balance : " + balance);
-        System.out.println("Enter amount that you want to withdraw : ");
-
-        Scanner sc = new Scanner(System.in);
-        Double n = sc.nextDouble();
-
+    public int Withdraw(double n) {
         if (n > balance) {
-            System.out.println("ERROR not enough balance ");
+            return 0;
         } else {
             balance -= n;
+            return 1;
+        }
+    }
+
+    public void Deposit(Double n) {
+        balance += n;
+    }
+
+    public String checkPassword(String password) {
+        if (password.matches(".*\\d.*")) {
+            strength++;
         }
 
-        System.out.println("Available Balance : " + balance);
+        if (password.matches(".*[a-z].*")) {
+            strength++;
+        }
 
-    }
+        if (password.matches(".*[A-Z].*")) {
+            strength++;
+        }
 
-    public void Deposit() {
+        if (password.matches(".*[!@#$%^&*()\\-+].*")) {
+            strength++;
+        }
 
-        System.out.println("Available Balance : " + balance);
-        System.out.println("Enter amount that you want to deposit : ");
+        if (password.trim().isEmpty()) {
+            System.out.println("Password cannot be blank or only spaces.");
+        } else if (password.matches(".*\\s.*")) {
+            System.out.println("Password contains blank spaces.");
+        }
 
-        Scanner sc = new Scanner(System.in);
-        Double n = sc.nextDouble();
-
-        balance += n;
-        System.out.println("Available Balance : " + balance);
-
-    }
-
-    public void setDate() {
-        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
-        dateCreated = ft.format(new Date());
-    }
-
-    public void getInfo() {
-        System.out.println("Name : " + AccountName);
-        System.out.println("Balance : " + balance);
+        if (strength <= 1) {
+            return "Password level: Weak";
+        } else if (strength == 2 || 3 == strength) {
+            return "Password level: Medium";
+        } else {
+            return "Password level: Strong";
+        }
     }
 }
