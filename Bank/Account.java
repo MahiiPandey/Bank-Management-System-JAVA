@@ -9,7 +9,7 @@ public class Account {
     private long AccountNumber;
     private String AccountName;
     private int pin;
-    private double balance;
+    private double balance = 2000d;
     private double annualInterestRate;
     private String dateCreated;
 

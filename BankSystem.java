@@ -1,9 +1,12 @@
 import Bank.Account;
+import Bank.MyFrame1;
+
 import java.util.Scanner;
 
 public class BankSystem {
-
     public static void main(String[] args) {
+
+        new MyFrame1();
 
         System.out.println("Welcome to Bank System");
         System.out.println("----------------------------------");
