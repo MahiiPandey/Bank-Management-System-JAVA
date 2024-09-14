@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     protected static final String URL = "jdbc:mysql://localhost:3306/miniproject";
     protected static final String USER = "root";
-    protected static final String PASSWORD = "Mahi@2708";
+    protected static final String PASSWORD = "darshit89";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
