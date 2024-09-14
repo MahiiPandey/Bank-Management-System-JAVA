@@ -1,4 +1,4 @@
-package Bank.GUI;
+package com.miniproject.Bank.GUI;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import Bank.Account;
+import com.miniproject.Bank.Account;
 
 public class CreateAccounntFrame {
 
@@ -32,6 +32,16 @@ public class CreateAccounntFrame {
             String password = new String(passwordField.getPassword());
 
             Account account = new Account();
+            account.createAccount(name);
+            account.setPassword(password);
+
+            if (name.trim().isEmpty() || password.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "Account name or password can not be blank", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+                frame.dispose();
+                new MainFrame();
+                return;
+            }
 
             int option = JOptionPane.showConfirmDialog(frame,
                     account.checkPassword(password) + "\nDo you want to continue?",
@@ -40,13 +50,11 @@ public class CreateAccounntFrame {
 
             if (option == JOptionPane.YES_OPTION) {
 
-                if (Account.accountExists(name)) {
+                if (Account.accountExists(name, password)) {
                     JOptionPane.showMessageDialog(panel, "Account with this name already exists. Please login.");
                     frame.dispose();
                     new MainFrame();
                 } else {
-                    account.createAccount(name);
-                    account.setPassword(password);
                     account.save();
                     messageLabel.setText("Account created successfully!\n");
                     JOptionPane.showMessageDialog(panel, "Your Account Number is : " + account.getAccountNumber());

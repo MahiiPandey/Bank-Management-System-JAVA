@@ -1,10 +1,12 @@
+package com.miniproject.Bank;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
-import Bank.DataBase.DatabaseConnection;
+import com.miniproject.Bank.DataBase.DatabaseConnection;
 
 public class Account {
     private long accountNumber;
@@ -34,6 +36,9 @@ public class Account {
             sb.append(rand.nextInt(10));
         }
         this.accountNumber = Long.parseLong(sb.toString());
+        if (accountExists(accountNumber)) {
+            setaccountNumber();
+        }
     }
 
     public long getAccountNumber() {
@@ -88,9 +93,7 @@ public class Account {
             strength++;
         }
 
-        if (password.trim().isEmpty()) {
-            return "Password cannot be blank or only spaces.";
-        } else if (password.matches(".*\\s.*")) {
+        if (password.matches(".*\\s.*")) {
             return "Password contains blank spaces.";
         }
 
@@ -127,11 +130,28 @@ public class Account {
         }
     }
 
-    public static boolean accountExists(String name) {
+    public static boolean accountExists(long accountNumber) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "SELECT COUNT(*) FROM accounts WHERE name = ?";
+            String sql = "SELECT COUNT(*) FROM accounts WHERE accountNumber = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setLong(1, accountNumber);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean accountExists(String name, String password) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT COUNT(*) FROM accounts WHERE name = ? AND password = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, name);
+                pstmt.setString(2, password);
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
@@ -146,12 +166,12 @@ public class Account {
     public void save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
 
-            if (accountExists(this.accountName)) {
-                String updateSql = "UPDATE accounts SET password = ?, balance = ? WHERE name = ?";
+            if (accountExists(this.accountName, this.password)) {
+                String updateSql = "UPDATE accounts SET balance = ? WHERE name = ? AND password = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                    updateStmt.setString(1, this.password);
-                    updateStmt.setDouble(2, this.balance);
-                    updateStmt.setString(3, this.accountName);
+                    updateStmt.setDouble(1, this.balance);
+                    updateStmt.setString(2, this.accountName);
+                    updateStmt.setString(3, this.password);
                     updateStmt.executeUpdate();
                 }
 

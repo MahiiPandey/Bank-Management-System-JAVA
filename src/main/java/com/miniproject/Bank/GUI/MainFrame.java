@@ -1,4 +1,4 @@
-package Bank.GUI;
+package com.miniproject.Bank.GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;

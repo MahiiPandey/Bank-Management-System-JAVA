@@ -1,10 +1,10 @@
-package Bank.GUI;
+package com.miniproject.Bank.GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Bank.Account;
+import com.miniproject.Bank.Account;
 
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
