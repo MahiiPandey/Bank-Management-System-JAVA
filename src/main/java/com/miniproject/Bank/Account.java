@@ -1,6 +1,8 @@
 package com.miniproject.Bank;
 
+import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +10,7 @@ import java.util.Random;
 
 import com.miniproject.Bank.DataBase.DatabaseConnection;
 
-public class Account {
+public class Account extends DatabaseConnection {
     private long accountNumber;
     private String accountName;
     private String password;
@@ -71,6 +73,36 @@ public class Account {
     public void deposit(double amount) {
         balance += amount;
         save();
+    }
+
+    public static void moneyTransfer(long senderId, long receiverId, double Amount) {
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            String insert1 = "INSERT INTO transactions(sender_account_num ,receiver_account_num ,amount)VALUES(?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(insert1);
+            ps.setLong(1, senderId);
+            ps.setLong(2, receiverId);
+            ps.setDouble(3, Amount);
+            ps.executeUpdate();
+
+            updateBalance(conn, senderId, -Amount); // Debit sender
+            updateBalance(conn, receiverId, Amount); // Credit receiver
+
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    public static void updateBalance(Connection conn, long id, double Amount) {
+        try {
+            String query = "UPDATE Users SET balance = balance + ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1, Amount);
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String checkPassword(String password) {
