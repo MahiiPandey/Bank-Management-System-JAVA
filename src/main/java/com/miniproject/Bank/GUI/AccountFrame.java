@@ -23,7 +23,7 @@ public class AccountFrame {
         label.setHorizontalAlignment(JLabel.CENTER);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1));
+        panel.setLayout(new GridLayout(6, 1));
 
         JButton withdrawbutton = new JButton("Withdraw Amount");
         withdrawbutton.setFocusable(false);
@@ -48,6 +48,12 @@ public class AccountFrame {
             label.setText("Current Balance : " + String.valueOf(ac.getBalance()));
         });
 
+        JButton transaction = new JButton("Money Transfer");
+        transaction.setFocusable(false);
+        transaction.addActionListener(e -> {
+            label.setText("Current Balance : " + String.valueOf(ac.getBalance()));
+        });
+
         JButton backbutton = new JButton("Back");
         backbutton.setFocusable(false);
         backbutton.addActionListener(e -> {
@@ -58,6 +64,7 @@ public class AccountFrame {
         panel.add(withdrawbutton);
         panel.add(depositbutton);
         panel.add(checkbalance);
+        panel.add(transaction);
         panel.add(backbutton);
         panel.add(label);
 

@@ -1,6 +1,5 @@
 package com.miniproject.Bank;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,7 +16,6 @@ public class Account extends DatabaseConnection {
     private int strength;
     private double balance = 2000d;
 
-    // Default constructor
     public Account() {
     }
 
