@@ -12,7 +12,8 @@ public class CreateTable extends DatabaseConnection {
                 + "name VARCHAR(255) NOT NULL, "
                 + "password VARCHAR(255) NOT NULL,"
                 + "accountNumber BIGINT NOT NULL UNIQUE, "
-                + "balance double not null"
+                + "balance double not null,"
+                + "pin int not null"
                 + ");";
         try {
             Connection Table_conn = DriverManager.getConnection(URL, USER, PASSWORD);

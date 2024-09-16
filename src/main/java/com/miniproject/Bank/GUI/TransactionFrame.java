@@ -13,15 +13,14 @@ import com.miniproject.Bank.Account;
 
 public class TransactionFrame {
 
-    public TransactionFrame() {
+    public TransactionFrame(Account ac) {
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
 
-        JPanel panel = new JPanel(new GridLayout(6, 1));
+        JPanel panel = new JPanel(new GridLayout(4, 1));
 
-        JTextField senderAccountnumber = new JTextField();
         JTextField receiverAccountnumber = new JTextField();
         JLabel messageLabel = new JLabel();
         JPasswordField pf = new JPasswordField();
@@ -29,30 +28,26 @@ public class TransactionFrame {
         JButton createButton = new JButton("Send");
         createButton.addActionListener(e -> {
 
-            long sender = Long.parseLong(senderAccountnumber.getText());
             long receiver = Long.parseLong(receiverAccountnumber.getText());
 
-            Account saccount = Account.getAccount(sender);
             Account raccount = Account.getAccount(receiver);
 
-            if (saccount == null) {
-                messageLabel.setText("Sender Account number doesn't exist");
-            } else if (raccount == null) {
+            if (raccount == null) {
                 messageLabel.setText("Receiver Account number doesn't exist");
             } else {
-                int option = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
+                int option = JOptionPane.showConfirmDialog(null, pf, "Enter pin", JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
-
                 if (option == 0) {
-                    int password = Integer.parseInt(new String(pf.getPassword()));
-                    if (password != saccount.getpin()) {
+                    System.out.println(ac.getpin());
+                    int pin = Integer.parseInt(new String(pf.getPassword()));
+                    System.out.println(pin);
+                    if (pin != ac.getpin()) {
                         JOptionPane.showMessageDialog(createButton, "Invalid pin !!", null, JOptionPane.ERROR_MESSAGE);
                     } else {
-                        
+
                     }
                 }
             }
-
         });
 
         JButton backButton = new JButton("Back");
@@ -61,8 +56,6 @@ public class TransactionFrame {
             new MainFrame();
         });
 
-        panel.add(new JLabel("Enter Sender Account Number:"));
-        panel.add(senderAccountnumber);
         panel.add(new JLabel("Enter Receiver Account Number:"));
         panel.add(receiverAccountnumber);
         panel.add(createButton);

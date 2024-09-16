@@ -21,11 +21,12 @@ public class Account extends DatabaseConnection {
     }
 
     // Parameterized constructor
-    public Account(String accountName, String password, long accountNumber, double balance) {
+    public Account(String accountName, String password, long accountNumber, double balance, int pin) {
         this.accountName = accountName;
         this.password = password;
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.pin = pin;
     }
 
     public void setaccountNumber() {
@@ -157,8 +158,9 @@ public class Account extends DatabaseConnection {
 
                     long accountNumber = rs.getLong("accountNumber");
                     double balance = rs.getDouble("balance");
+                    int pin = rs.getInt("pin");
 
-                    return new Account(name, password, accountNumber, balance);
+                    return new Account(name, password, accountNumber, balance, pin);
                 } else {
                     return null;
                 }
@@ -181,8 +183,9 @@ public class Account extends DatabaseConnection {
                     String name = rs.getString("name");
                     String password = rs.getString("password");
                     double balance = rs.getDouble("balance");
+                    int pin = rs.getInt("pin");
 
-                    return new Account(name, password, accountNumber, balance);
+                    return new Account(name, password, accountNumber, balance, pin);
                 } else {
                     return null;
                 }
@@ -230,9 +233,10 @@ public class Account extends DatabaseConnection {
         try (Connection conn = DatabaseConnection.getConnection()) {
 
             if (accountExists(this.accountName, this.password)) {
-                String updateSql = "UPDATE accounts SET balance = ? WHERE name = ? AND password = ?";
+                String updateSql = "UPDATE accounts SET balance = ? AND pin = ? WHERE name = ? AND password = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setDouble(1, this.balance);
+                    updateStmt.setInt(4, this.pin);
                     updateStmt.setString(2, this.accountName);
                     updateStmt.setString(3, this.password);
                     updateStmt.executeUpdate();
@@ -240,12 +244,13 @@ public class Account extends DatabaseConnection {
 
                 System.out.println("Account updated successfully.");
             } else {
-                String insertSql = "INSERT INTO accounts (name, password, accountNumber, balance) VALUES (?, ?, ?, ?)";
+                String insertSql = "INSERT INTO accounts (name, password, accountNumber, balance , pin) VALUES (?, ?, ?, ? ,?)";
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                     insertStmt.setString(1, this.accountName);
                     insertStmt.setString(2, this.password);
                     insertStmt.setLong(3, this.accountNumber);
                     insertStmt.setDouble(4, this.balance);
+                    insertStmt.setDouble(5, this.pin);
                     insertStmt.executeUpdate();
                 }
 

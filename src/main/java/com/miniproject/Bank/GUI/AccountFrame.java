@@ -52,7 +52,8 @@ public class AccountFrame {
         transaction.setFocusable(false);
         transaction.addActionListener(e -> {
             frame.dispose();
-            new TransactionFrame();
+            System.out.println(ac.getpin());
+            new TransactionFrame(ac);
         });
 
         JButton backbutton = new JButton("Back");

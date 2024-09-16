@@ -34,6 +34,7 @@ public class LoginFrame {
                 if (account != null) {
                     messageLabel.setText("Login successful!");
                     frame.dispose();
+                    System.out.println(account.getpin());
                     new AccountFrame(account);
 
                 } else {
