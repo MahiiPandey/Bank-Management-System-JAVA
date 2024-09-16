@@ -38,9 +38,7 @@ public class TransactionFrame {
                 int option = JOptionPane.showConfirmDialog(null, pf, "Enter pin", JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
                 if (option == 0) {
-                    System.out.println(ac.getpin());
                     int pin = Integer.parseInt(new String(pf.getPassword()));
-                    System.out.println(pin);
                     if (pin != ac.getpin()) {
                         JOptionPane.showMessageDialog(createButton, "Invalid pin !!", null, JOptionPane.ERROR_MESSAGE);
                     } else {

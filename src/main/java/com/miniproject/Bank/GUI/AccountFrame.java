@@ -52,7 +52,6 @@ public class AccountFrame {
         transaction.setFocusable(false);
         transaction.addActionListener(e -> {
             frame.dispose();
-            System.out.println(ac.getpin());
             new TransactionFrame(ac);
         });
 
