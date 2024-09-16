@@ -47,6 +47,8 @@ public class TransactionFrame {
                     int password = Integer.parseInt(new String(pf.getPassword()));
                     if (password != saccount.getpin()) {
                         JOptionPane.showMessageDialog(createButton, "Invalid pin !!", null, JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        
                     }
                 }
             }

@@ -57,6 +57,15 @@ public class CreateAccounntFrame {
                 } else {
                     account.save();
                     messageLabel.setText("Account created successfully!\n");
+
+                    JPasswordField pf = new JPasswordField();
+                    int options = JOptionPane.showConfirmDialog(null, pf, "Enter Pin",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.PLAIN_MESSAGE);
+                    if (options == 0) {
+                        int pin = Integer.parseInt(new String(pf.getPassword()));
+                        account.setpin(pin);
+                    }
                     JOptionPane.showMessageDialog(panel, "Your Account Number is : " + account.getAccountNumber());
                 }
             } else {
