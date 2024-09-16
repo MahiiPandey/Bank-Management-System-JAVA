@@ -37,6 +37,12 @@ public class TransactionFrame {
             if (raccount == null) {
                 messageLabel.setText("Receiver Account number doesn't exist");
             } else {
+                if (ac.getpin() == 0) {
+                    JOptionPane.showMessageDialog(null, "Set pin first ", null, 0);
+                    frame.dispose();
+                    new LoginFrame();
+                    return;
+                }
                 int option = JOptionPane.showConfirmDialog(null, pf, "Enter pin", JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
                 if (option == 0) {
@@ -44,19 +50,16 @@ public class TransactionFrame {
                     if (pin != ac.getpin()) {
                         JOptionPane.showMessageDialog(createButton, "Invalid pin !!", null, JOptionPane.ERROR_MESSAGE);
                     } else {
-
+                        if (amount > ac.getBalance()) {
+                            JOptionPane.showMessageDialog(frame, "Insufficient Balance!");
+                        } else {
+                            ac.withdraw(amount);
+                            raccount.deposit(amount);
+                            ac.transactionsave(receiver, amount);
+                        }
                     }
                 }
             }
-
-            if (amount > ac.getBalance()) {
-                JOptionPane.showMessageDialog(frame, "Insufficient Balance!");
-            } else {
-                ac.withdraw(amount);
-                raccount.deposit(amount);
-                ac.transactionsave(receiver, amount);
-            }
-
         });
 
         JButton backButton = new JButton("Back");

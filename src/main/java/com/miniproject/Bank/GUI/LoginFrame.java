@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -33,6 +34,22 @@ public class LoginFrame {
             if (Account.accountExists(name, password)) {
                 if (account != null) {
                     messageLabel.setText("Login successful!");
+                    if (account.getpin() == 0) {
+                        int option = JOptionPane.showConfirmDialog(null, "Do you want to set pin", "",
+                                JOptionPane.YES_NO_OPTION);
+
+                        if (option == 0) {
+                            JPasswordField pf = new JPasswordField();
+
+                            int options = JOptionPane.showConfirmDialog(null, pf, "Enter Pin",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE);
+                            if (options == 0) {
+                                int pin = Integer.parseInt(new String(pf.getPassword()));
+                                account.setpin(pin);
+                            }
+                        }
+                    }
                     frame.dispose();
                     new AccountFrame(account);
 
