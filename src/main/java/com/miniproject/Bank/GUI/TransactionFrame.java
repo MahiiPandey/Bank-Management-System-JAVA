@@ -56,6 +56,7 @@ public class TransactionFrame {
                 raccount.deposit(amount);
                 ac.transactionsave(receiver, amount);
             }
+
         });
 
         JButton backButton = new JButton("Back");
