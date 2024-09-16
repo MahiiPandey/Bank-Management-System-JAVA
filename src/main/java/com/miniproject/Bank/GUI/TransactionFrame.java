@@ -19,9 +19,10 @@ public class TransactionFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
 
-        JPanel panel = new JPanel(new GridLayout(4, 1));
+        JPanel panel = new JPanel(new GridLayout(6, 1));
 
         JTextField receiverAccountnumber = new JTextField();
+        JTextField amountval = new JTextField();
         JLabel messageLabel = new JLabel();
         JPasswordField pf = new JPasswordField();
 
@@ -29,6 +30,7 @@ public class TransactionFrame {
         createButton.addActionListener(e -> {
 
             long receiver = Long.parseLong(receiverAccountnumber.getText());
+            int amount = Integer.parseInt(amountval.getText());
 
             Account raccount = Account.getAccount(receiver);
 
@@ -46,6 +48,14 @@ public class TransactionFrame {
                     }
                 }
             }
+
+            if (amount > ac.getBalance()) {
+                JOptionPane.showMessageDialog(frame, "Insufficient Balance!");
+            } else {
+                ac.withdraw(amount);
+                raccount.deposit(amount);
+                ac.transactionsave(receiver, amount);
+            }
         });
 
         JButton backButton = new JButton("Back");
@@ -56,6 +66,8 @@ public class TransactionFrame {
 
         panel.add(new JLabel("Enter Receiver Account Number:"));
         panel.add(receiverAccountnumber);
+        panel.add(new JLabel("Enter Amount:"));
+        panel.add(amountval);
         panel.add(createButton);
         panel.add(backButton);
         panel.add(messageLabel);

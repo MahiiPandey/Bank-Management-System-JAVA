@@ -28,9 +28,7 @@ public class CreateTable extends DatabaseConnection {
     public void TransactionsTable() {
         String create_tranTable = "CREATE TABLE transactions("
                 + " transaction_id INT primary key auto_increment,"
-                + " sender_id int,"
                 + " sender_account_num BIGINT,"
-                + " receiver_id int,"
                 + " receiver_account_num BIGINT,"
                 + " amount decimal(10,3),"
                 + " transaction_time timestamp default current_timestamp,"

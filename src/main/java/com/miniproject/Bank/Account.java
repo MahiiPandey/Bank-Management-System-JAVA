@@ -1,7 +1,6 @@
 package com.miniproject.Bank;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -81,36 +80,6 @@ public class Account extends DatabaseConnection {
     public void deposit(double amount) {
         balance += amount;
         save();
-    }
-
-    public static void moneyTransfer(long senderId, long receiverId, double Amount) {
-        try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            String insert1 = "INSERT INTO transactions(sender_account_num ,receiver_account_num ,amount)VALUES(?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(insert1);
-            ps.setLong(1, senderId);
-            ps.setLong(2, receiverId);
-            ps.setDouble(3, Amount);
-            ps.executeUpdate();
-
-            updateBalance(conn, senderId, -Amount); // Debit sender
-            updateBalance(conn, receiverId, Amount); // Credit receiver
-
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-    }
-
-    public static void updateBalance(Connection conn, long id, double Amount) {
-        try {
-            String query = "UPDATE Users SET balance = balance + ? WHERE id = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setDouble(1, Amount);
-            ps.setLong(2, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public String checkPassword(String password) {
@@ -231,34 +200,68 @@ public class Account extends DatabaseConnection {
 
     public void save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
-
             if (accountExists(this.accountName, this.password)) {
-                String updateSql = "UPDATE accounts SET balance = ? AND pin = ? WHERE name = ? AND password = ?";
+                String updateSql = "UPDATE accounts SET balance = ?, pin = ? WHERE name = ? AND password = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setDouble(1, this.balance);
-                    updateStmt.setInt(4, this.pin);
-                    updateStmt.setString(2, this.accountName);
-                    updateStmt.setString(3, this.password);
+                    updateStmt.setInt(2, this.pin);
+                    updateStmt.setString(3, this.accountName);
+                    updateStmt.setString(4, this.password);
                     updateStmt.executeUpdate();
                 }
-
                 System.out.println("Account updated successfully.");
             } else {
-                String insertSql = "INSERT INTO accounts (name, password, accountNumber, balance , pin) VALUES (?, ?, ?, ? ,?)";
+                String insertSql = "INSERT INTO accounts (name, password, accountNumber, balance, pin) VALUES (?, ?, ?, ?, ?)";
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                     insertStmt.setString(1, this.accountName);
                     insertStmt.setString(2, this.password);
                     insertStmt.setLong(3, this.accountNumber);
                     insertStmt.setDouble(4, this.balance);
-                    insertStmt.setDouble(5, this.pin);
+                    insertStmt.setInt(5, this.pin);
                     insertStmt.executeUpdate();
                 }
-
                 System.out.println("Account saved successfully.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void transactionsave(long receiver_account_num, int amount) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+
+            String insertSql = "INSERT INTO transactions (sender_account_num, receiver_account_num, amount) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                insertStmt.setLong(1, this.accountNumber);
+                insertStmt.setLong(2, receiver_account_num);
+                insertStmt.setInt(3, amount);
+                insertStmt.executeUpdate();
+
+                updateBalance(accountNumber, -amount); // Debit sender
+                updateBalance(receiver_account_num, amount); // Credit receiver
+            }
+
+            System.out.println("Transaction info saved successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBalance(long id, double Amount) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+
+            String query = "UPDATE accounts SET balance = balance + ? WHERE id = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+                ps.setDouble(1, Amount);
+                ps.setLong(2, id);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static int deleteAccount(long accountNumber) {
@@ -283,5 +286,4 @@ public class Account extends DatabaseConnection {
         }
         return 0;
     }
-
 }
