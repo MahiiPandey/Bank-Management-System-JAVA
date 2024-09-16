@@ -15,6 +15,7 @@ public class Account extends DatabaseConnection {
     private String password;
     private int strength;
     private double balance = 2000d;
+    private int pin;
 
     public Account() {
     }
@@ -39,6 +40,14 @@ public class Account extends DatabaseConnection {
         if (accountExists(accountNumber)) {
             setaccountNumber();
         }
+    }
+
+    public void setpin(int pin) {
+        this.pin = pin;
+    }
+
+    public int getpin() {
+        return pin;
     }
 
     public long getAccountNumber() {
@@ -147,6 +156,30 @@ public class Account extends DatabaseConnection {
                 if (rs.next()) {
 
                     long accountNumber = rs.getLong("accountNumber");
+                    double balance = rs.getDouble("balance");
+
+                    return new Account(name, password, accountNumber, balance);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Account getAccount(long accountNumber) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM accounts WHERE accountNumber = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setLong(1, accountNumber);
+                ResultSet rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+
+                    String name = rs.getString("name");
+                    String password = rs.getString("password");
                     double balance = rs.getDouble("balance");
 
                     return new Account(name, password, accountNumber, balance);

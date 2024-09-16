@@ -51,7 +51,8 @@ public class AccountFrame {
         JButton transaction = new JButton("Money Transfer");
         transaction.setFocusable(false);
         transaction.addActionListener(e -> {
-            label.setText("Current Balance : " + String.valueOf(ac.getBalance()));
+            frame.dispose();
+            new TransactionFrame();
         });
 
         JButton backbutton = new JButton("Back");
