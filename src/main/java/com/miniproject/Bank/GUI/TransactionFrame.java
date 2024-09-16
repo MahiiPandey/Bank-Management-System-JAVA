@@ -56,6 +56,8 @@ public class TransactionFrame {
                             ac.withdraw(amount);
                             raccount.deposit(amount);
                             ac.transactionsave(receiver, amount);
+                            frame.dispose();
+                            new MainFrame();
                         }
                     }
                 }
